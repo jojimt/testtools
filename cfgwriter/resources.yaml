@@ -1,0 +1,26 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cfg:writer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: cfgwriter
+  namespace: default
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cfg-writer
+spec:
+  serviceAccountName: cfgwriter
+  containers:
+        - name: cfgwriter
+          image: jojimt/cfgwriter
+#          args:
+#          - "--name-space=<>"
+#          - "--secret-name=<>"
+
